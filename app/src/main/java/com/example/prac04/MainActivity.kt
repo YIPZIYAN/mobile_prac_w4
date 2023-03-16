@@ -1,5 +1,6 @@
 package com.example.prac04
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,30 +14,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val spinnerChoice : Spinner = findViewById(R.id.spinner)
-        var list_of_items = arrayOf("Teh","Coffee","Milo")
-
-
-        //Create an ArrayAdapter using as simple spinner layout and languages array
-        val aa = ArrayAdapter(this,android.R.layout.simple_spinner_item,list_of_items)
-        //Set layout to use when the list of choices appear
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        //Set adapter to spinner
-        spinnerChoice!!.setAdapter(aa)
+setListeners()
     }
 
-    fun onItemSelected(arg0:AdapterView<*>, arg1: View,position: Int,id: Long){
-        val textBox1: TextView = findViewById(R.id.txtBox1)
-        var text = when(position){
-            0 -> "Teh"
-            1 -> "Coffee"
-            else -> "Milo"
+    private fun makeColored(view: View){
+        when(view.id){
+
+            //Boxes using class colors for the background
+            R.id.box_one_text -> view.setBackgroundColor(Color.DKGRAY)
+            R.id.box_two_text -> view.setBackgroundColor(Color.GRAY)
+            R.id.box_three_text -> view.setBackgroundColor(Color.BLUE)
+            R.id.box_four_text -> view.setBackgroundColor(Color.MAGENTA)
+            R.id.box_four_text -> view.setBackgroundColor(Color.RED)
+            else -> view.setBackgroundColor(Color.LTGRAY)
+        }
+    }
+
+    private fun setListeners(){
+        val boxOneText=findViewById<TextView>(R.id.box_one_text)
+        val boxTwoText=findViewById<TextView>(R.id.box_two_text)
+        val boxThreeText=findViewById<TextView>(R.id.box_three_text)
+        val boxFourText=findViewById<TextView>(R.id.box_four_text)
+        val boxFiveText=findViewById<TextView>(R.id.box_five_text)
+
+        val rootContraintLayout = findViewById<View>(R.id.constraint_layout)
+
+        val clickableView : List<View> =
+            listOf(boxOneText,boxTwoText,boxThreeText,boxFourText,boxFiveText,rootContraintLayout)
+
+        for (item in clickableView){
+        item.setOnClickListener{
+            makeColored(it)
         }
 
-        textBox1.text = text
-    }
-
-    fun onNothingSelected(arg0: AdapterView<*>){
+        }
 
     }
 }
